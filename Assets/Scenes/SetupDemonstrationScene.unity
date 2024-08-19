@@ -3423,7 +3423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
-  oneShot: 1
+  oneShot: 0
   triggerEvents:
     m_PersistentCalls:
       m_Calls:
