@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class TorchHandler : MonoBehaviour
 {
+    public GameManager gameManager;
     public GameObject torch;
     public Light light;
     public float power = 1;
     public bool isOn;
+    public UnityEvent DrainEvent;
 
     private void Awake()
     {
-        torch.SetActive(false);
+        torch.SetActive(false);       
     }
 
     public void PickUp()
@@ -23,16 +26,23 @@ public class TorchHandler : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-       if (isOn && power > 0) 
-    
-      {
-        power -= 0.02f * Time.deltaTime;
-        light.intensity = Mathf.Clamp01(power);
-      }
-      if (Input.GetKeyDown(KeyCode.F))
-      {
-        isOn = !isOn;
-        light.enabled = isOn;
-      }
-  }
+        if (isOn && power > 0)
+
+        {
+            power -= 0.02f * Time.deltaTime;
+            light.intensity = Mathf.Clamp01(power);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            isOn = !isOn;
+            light.enabled = isOn;
+        }
+        if (power <=0)
+        {
+            // gameManager.TriggerLoseState();
+            DrainEvent.Invoke();
+        }
+       
+    }
 }
+

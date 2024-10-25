@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 /// Last Updated: March, 2024
 /// 
 /// ###---**COPYRIGHT STATEMENT**---###
-/// © Copyright 2024 South Metropolitan TAFE. All rights reserved.
+/// ï¿½ Copyright 2024 South Metropolitan TAFE. All rights reserved.
 /// This code is provided to student's of South Metropolitan TAFE for educational purposes only.
 /// Unauthorized use, including but not limited to sharing, redistributing, copying, or commercialising
 /// this code or any part of it, without the express written permission of the authors, is strictly prohibited.
@@ -34,6 +34,10 @@ public class GameManager : MonoBehaviour, ILoggable
     [SerializeField] private float authorCardDuration = 5f;
     [Tooltip("The text that will appear on tlhe author card when the game is finished.")]
     [SerializeField][TextArea] private string authorCardText;
+    [Tooltip("The text that will appear on the author card when the game is finished.")]
+    [SerializeField] private string authorNote = "";
+    [SerializeField] AudioSource endGameAudio;
+    [SerializeField] AudioClip winSound, loseSound;
 
     private int gameState = 0;
 
@@ -67,9 +71,14 @@ public class GameManager : MonoBehaviour, ILoggable
     /// <returns>Returns new WaitForSeconds initially while waiting to invoke the author card, and after waiting to reset the game.</returns>
     private IEnumerator StartGameCompleteSequence()
     {
-        if (GameWinEvent != null)
+        if (GameWinEvent != null)//if the game event is win
         {
-            GameWinEvent.Invoke(timeToAuthorCard);
+            endGameAudio.clip = winSound;// when the win state is triggered this line of code tells the game manager to prepare the audio clip that signals that you have won the game
+            authorNote = "You Win"; // then, this line prepares the message which shows when you win the gam
+            authorCardText = authorNote;//after which the prepared text is sent to the author note in the game UI
+            GameWinEvent.Invoke(timeToAuthorCard);//afterwhich the event is invoked and the end game sequence is started.
+            endGameAudio.Play();
+
         }
         yield return new WaitForSeconds(timeToAuthorCard);
         if (AuthorCardEvent != null)
@@ -92,7 +101,17 @@ public class GameManager : MonoBehaviour, ILoggable
     {
         if (GameLoseEvent != null)
         {
+            endGameAudio.clip = loseSound;
+            authorNote = "You Lose";
+            authorCardText = authorNote;
             GameLoseEvent.Invoke(gameOverStateDuration);
+            endGameAudio.Play();
+
+        }
+        yield return new WaitForSeconds(timeToAuthorCard);
+        if (AuthorCardEvent != null)
+        {
+            AuthorCardEvent.Invoke(authorCardText);
         }
         yield return new WaitForSeconds(gameOverStateDuration);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

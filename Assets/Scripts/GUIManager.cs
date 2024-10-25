@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// Last Updated: March, 2024
 /// 
 /// ###---**COPYRIGHT STATEMENT**---###
-/// © Copyright 2024 South Metropolitan TAFE. All rights reserved.
+/// ï¿½ Copyright 2024 South Metropolitan TAFE. All rights reserved.
 /// This code is provided to student's of South Metropolitan TAFE for educational purposes only.
 /// Unauthorized use, including but not limited to sharing, redistributing, copying, or commercialising
 /// this code or any part of it, without the express written permission of the authors, is strictly prohibited.
@@ -32,6 +32,8 @@ public class GUIManager : MonoBehaviour, ILoggable
     [SerializeField] private GameObject authorCardOverlay;
     [Tooltip("A reference to the author card text object.")]
     [SerializeField] private Text authorCardText;
+    [Tooltip("The text that will appear on the author card when the game is finished.")]
+    [SerializeField][TextArea] private string authorCardText2;
 
     /// <summary>
     /// Called when the script component is enabled.
