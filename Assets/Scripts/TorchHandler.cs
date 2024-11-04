@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class TorchHandler : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class TorchHandler : MonoBehaviour
     public float power = 1;
     public bool isOn;
     public UnityEvent DrainEvent;
+    public Image BatteryBar;
 
     private void Awake()
     {
@@ -31,6 +33,9 @@ public class TorchHandler : MonoBehaviour
         {
             power -= 0.02f * Time.deltaTime;
             light.intensity = Mathf.Clamp01(power);
+            BatteryBar.fillAmount = Mathf.Clamp01(power);
+            
+
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -42,7 +47,7 @@ public class TorchHandler : MonoBehaviour
             // gameManager.TriggerLoseState();
             DrainEvent.Invoke();
         }
-       
+        
     }
 }
 

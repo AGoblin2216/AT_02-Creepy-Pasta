@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour, ILoggable
         if (GameWinEvent != null)//if the game event is win
         {
             endGameAudio.clip = winSound;// when the win state is triggered this line of code tells the game manager to prepare the audio clip that signals that you have won the game
-            authorNote = "You Win"; // then, this line prepares the message which shows when you win the gam
+            authorNote = "You escape momentarily.."; // then, this line prepares the message which shows when you win the gam
             authorCardText = authorNote;//after which the prepared text is sent to the author note in the game UI
             GameWinEvent.Invoke(timeToAuthorCard);//afterwhich the event is invoked and the end game sequence is started.
             endGameAudio.Play();
@@ -102,7 +102,7 @@ public class GameManager : MonoBehaviour, ILoggable
         if (GameLoseEvent != null)
         {
             endGameAudio.clip = loseSound;
-            authorNote = "You Lose";
+            authorNote = "You are consumed by the darkness";
             authorCardText = authorNote;
             GameLoseEvent.Invoke(gameOverStateDuration);
             endGameAudio.Play();
